@@ -36,9 +36,9 @@ cd explorer
 ./build.sh
 
 # Choose a password for the database
-echo POSTGRES_PASSWORD=some-pw-you-can-choose > db/db.secret
+echo POSTGRES_PASSWORD=postgres > db/db.secret
 # Same password but different env variable for the GraphQL service
-echo DB_USER_PWD=some-pw-you-can-choose >> db/db.secret
+echo DB_USER_PWD=graphql >> db/db.secret
 
 # Create a named volume for Redis
 docker volume create ergo_redis
