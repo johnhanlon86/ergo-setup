@@ -9,12 +9,22 @@ Install [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](h
 
 ```
 # Volume and network expected by node compose file.
-docker volume create ergo-node
+docker volume create --name=ergo_redis
 docker network create ergo-node
 
-# Starting the service
+# Choose a password for the database
+echo POSTGRES_PASSWORD=ergo2022 > db/db.secret
+# Same password but different env variable for the GraphQL service
+echo DB_USER_PWD=ergo2022 >> db/db.secret
+# Check that the passwords have saved in the db.secret file
+cat ./db/db.secret
+
+# Create a named volume for Redis
+docker volume create ergo_redis
+
+# Start all services in one go...
 cd node
-docker compose up -d
+docker compose up -d --build
 
 # Stopping the service (still from within the node directory)
 # Using stop before/instead of down seems to cause less db corruption issues
@@ -22,43 +32,19 @@ docker compose stop node
 docker compose down
 ```
 
-## Explorer
-
-Edit `build.sh` (or `build.bat` if using Windows) and set the `EXPLORER_VERSION` variable to the desired Explorer version. You can use any tag from the explorer repository: https://github.com/ergoplatform/explorer-backend.
-
-For the UI, edit the `API` arg in `docker-compose.yml` to point to the (external) URL of your api service.
-
-> If using another node than the one defined in this stack, edit the `master-nodes` field in  `explorer\explorer-backend.conf` to point it to your node.
-
-```
-# Run the build script (you may need to grant execution permissions with `chmod +x build.sh`)
-cd explorer
-./build.sh
-
-# Choose a password for the database
-echo POSTGRES_PASSWORD=ergo2022 > db/db.secret
-# Same password but different env variable for the GraphQL service
-echo DB_USER_PWD=ergo2022 >> db/db.secret
-
-# Create a named volume for Redis
-docker volume create ergo_redis
-
-# Start all services in one go...
-docker compose up -d --build
-
 # ...or only the ones you need
-docker compose build db grabber api
+docker compose build db graphql
 docker compose up --no-start
-docker compose start db grabber
-docker compose start api
+docker compose start db
+docker compose start graphql
 
 # Check their status
-docker ps --filter name=explorer -a
+docker ps --filter name=graphql -a
 
 # Stop all explorer services
 docker compose down
 # ...or
-docker compose stop api grabber
+docker compose stop graphql
 docker compose stop db
 ```
 
