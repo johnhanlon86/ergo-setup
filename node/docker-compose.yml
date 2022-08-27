@@ -6,7 +6,6 @@ networks:
 
 volumes:
   ergo_node:
-    external: true
   ergo_redis:
     external: true
 
@@ -40,7 +39,6 @@ services:
     environment:
       POSTGRES_DB: ergo
       POSTGRES_USER: ergo
-      # POSTGRES_PASSWORD: "postgres"
     env_file:
       # Defines POSTGRES_PASSWORD
       - ./db/db.secret
@@ -48,7 +46,7 @@ services:
       # Mapped volume for easier Postgres upgrades.
       # Make sure the path exists or edit it here.
       # See also readme_pg_upgrade.md
-      - /var/lib/explorer_pg/14/data:/var/lib/postgresql/data
+      - ./var/lib/explorer_pg/14/data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     restart: unless-stopped
@@ -72,7 +70,7 @@ services:
     build:
       context: ./graphql
       args:
-        VERSION: "0.1.0"
+        VERSION: "0.3.5"
     environment:
       # database host address    
       DB_HOST: db                     
@@ -83,7 +81,6 @@ services:
       # database user name      
       DB_USER_NAME: ergo          
       # database password      
-      # DB_USER_PWD: "graphql"            
       # ergo node address and port
       ERGO_NODE_ADDRESS: node:9053    
       # optional: MAINNET or TESTNET      

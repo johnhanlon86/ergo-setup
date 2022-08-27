@@ -31,14 +31,14 @@ For the UI, edit the `API` arg in `docker-compose.yml` to point to the (external
 > If using another node than the one defined in this stack, edit the `master-nodes` field in  `explorer\explorer-backend.conf` to point it to your node.
 
 ```
-# Run the build script
+# Run the build script (you may need to grant execution permissions with `chmod +x build.sh`)
 cd explorer
 ./build.sh
 
 # Choose a password for the database
-echo POSTGRES_PASSWORD=postgres > db/db.secret
+echo POSTGRES_PASSWORD=ergo2022 > db/db.secret
 # Same password but different env variable for the GraphQL service
-echo DB_USER_PWD=graphql >> db/db.secret
+echo DB_USER_PWD=ergo2022 >> db/db.secret
 
 # Create a named volume for Redis
 docker volume create ergo_redis
