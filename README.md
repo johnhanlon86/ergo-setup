@@ -32,6 +32,7 @@ docker compose stop node
 docker compose down
 ```
 
+```
 # ...or only the ones you need
 docker compose build db graphql
 docker compose up --no-start
