@@ -1,10 +1,13 @@
-Docker based Ergo setup. This is a fork of [Ergo Setup](https://github.com/abchrisxyz/ergo-setup) but this repo runs less components and runs on a single docker compose network (the node component runs on the same netowrk as the explorer components).
+Docker based Ergo setup. This is a fork of [Ergo Setup](https://github.com/abchrisxyz/ergo-setup) but this repo runs less components and runs on a single docker compose network (the node component runs on the same network as the explorer components).
 
 Install [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/), then follow the instructions below for the components you'd like to run.
 
 > Containers are configured to expose certain ports for convenient access within a home lab context. Modify the `ports` values in the `docker-compose.yml` files if needed.
 
 ```
+# Make sure that you are in the node directory
+cd node
+
 # Volume and network expected by node compose file.
 docker volume create --name=ergo_redis
 docker network create ergo-node
@@ -50,17 +53,15 @@ echo DB_USER_PWD=ergo2022 >> db/db.secret
 cat ./db/db.secret
 
 # Run the build script
-cd node
 ./build.sh
 
 # If receiving an error `./build.sh: Permission denied`
 chmod +x build.sh
 
 # Start all services in one go...
-cd node
 docker compose up -d --build
 
-# Stopping the service (still from within the node directory)
+# Stopping the service
 # Using stop before/instead of down seems to cause less db corruption issues
 docker compose stop node
 docker compose down
