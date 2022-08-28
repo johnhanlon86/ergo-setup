@@ -32,7 +32,7 @@ services:
     build:
       context: ./db
       args:
-        EXPLORER_VERSION: 9.16.4
+        EXPLORER_VERSION: 9.16.6
     # -- Ucomment and edit if wanting to set custom work_mem value
     # -- https://www.postgresql.org/docs/current/runtime-config-resource.html
     # command: ["postgres", "-c", "work_mem=4MB"]
@@ -64,6 +64,48 @@ services:
       - "127.0.0.1:6379:6379"
     volumes:
       - ergo_redis:/usr/local/etc/redis
+
+  # Explorer backend chain-grabber
+  grabber:
+    build:
+      context: ./explorer-backend-9.16.6
+      dockerfile: chain-grabber.Dockerfile
+    env_file:
+      # Defines POSTGRES_PASSWORD
+      - ./db/db.secret
+    volumes:
+      - ./explorer-backend.conf:/explorer-backend.conf:ro
+    networks:
+      - default
+    command: /explorer-backend.conf
+    links:
+      - "db"
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Mempool tracker
+  utx-tracker:
+    build:
+      context: ./explorer-backend-9.16.6
+      dockerfile: utx-tracker.Dockerfile
+    env_file:
+      # Defines POSTGRES_PASSWORD
+      - ./db/db.secret
+    volumes:
+      - ./explorer-backend.conf:/explorer-backend.conf:ro
+    networks:
+      - default
+    command: /explorer-backend.conf
+    links:
+      - "db"
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   # GraphQL
   graphql:

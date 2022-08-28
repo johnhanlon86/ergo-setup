@@ -35,6 +35,12 @@ echo DB_USER_PWD=ergo2022 >> db/db.secret
 # Check that the passwords have saved in the db.secret file
 cat ./db/db.secret
 
+# Run the build script
+cd node
+./build.sh
+# If receiving an error `./build.sh: Permission denied`
+chmod +x build.sh
+
 # Start all services in one go...
 cd node
 docker compose up -d --build

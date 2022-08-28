@@ -1,3 +1,4 @@
 *.secret
 .stignore
 .stfolder
+explorer-backend-*
