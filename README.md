@@ -18,9 +18,11 @@ docker network create ergo-node
 # If using another node than the one defined in this stack,
 # edit the master-nodes field in explorer\explorer-backend.conf to point it to your node
 
-# In the docker-compose.yml, for the node component, within the `command:` change `--mainnet` to `--testnet` as required
+# In the docker-compose.yml, for the node component,
+# within the `command:` change `--mainnet` to `--testnet` as required
 
-# In the docker-compose.yml, for the graphql component, under environment, set the `NETWORK` field to `MAINNET` or `TESTNET` as required
+# In the docker-compose.yml, for the graphql component,
+# under environment, set the `NETWORK` field to `MAINNET` or `TESTNET` as required
 
 # Set the apiKeyHash in the ergo.conf file (if wallet functionality is required).
 ergo {
