@@ -1,16 +1,23 @@
-Docker based Ergo setup. Somewhat similar to [Ergo Bootstrap](https://github.com/ergoplatform/ergo-bootstrap) except it offers much less options and is not NixOS-based.
+Docker based Ergo setup. This is a fork of [Ergo Setup](https://github.com/abchrisxyz/ergo-setup) but this repo runs less components and runs on a single docker compose network (the node component runs on the same netowrk as the explorer components).
 
 Install [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](https://docs.docker.com/compose/install/), then follow the instructions below for the components you'd like to run.
 
 > Containers are configured to expose certain ports for convenient access within a home lab context. Modify the `ports` values in the `docker-compose.yml` files if needed.
 
-
-## Node
-
 ```
 # Volume and network expected by node compose file.
 docker volume create --name=ergo_redis
 docker network create ergo-node
+
+# In the docker-compose.yml, the node version image is set to `ergoplatform/ergo:v4.0.41`. Update this to the latest version at https://github.com/ergoplatform/ergo/releases
+
+# Set the EXPLORER_VERSION variable in `./build.sh` and `docker-compose.yml` and to the desired Explorer version. You can use any tag from the explorer repository: https://github.com/ergoplatform/explorer-backend
+
+# If using another node than the one defined in this stack, edit the master-nodes field in explorer\explorer-backend.conf to point it to your node
+
+# In the docker-compose.yml, for the node component, within the `command:` change `--mainnet` to `--testnet` as required
+
+# In the docker-compose.yml, for the graphql component, under environment, set the `NETWORK` field to `MAINNET` or `TESTNET` as required
 
 # Set the apiKeyHash in the ergo.conf file (if wallet functionality is required).
 ergo {
