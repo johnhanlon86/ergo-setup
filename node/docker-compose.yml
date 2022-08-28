@@ -46,7 +46,7 @@ services:
       # Mapped volume for easier Postgres upgrades.
       # Make sure the path exists or edit it here.
       # See also readme_pg_upgrade.md
-      - ./var/lib/explorer_pg/14/data:/var/lib/postgresql/data
+      - /var/lib/explorer_pg/14/data:/var/lib/postgresql/data
     ports:
       - "5433:5432"
     restart: unless-stopped
@@ -79,8 +79,7 @@ services:
       # database name      
       DB_NAME: ergo                   
       # database user name      
-      DB_USER_NAME: ergo          
-      # database password      
+      DB_USER_NAME: ergo             
       # ergo node address and port
       ERGO_NODE_ADDRESS: node:9053    
       # optional: MAINNET or TESTNET      

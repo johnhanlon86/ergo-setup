@@ -12,15 +12,28 @@ Install [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](h
 docker volume create --name=ergo_redis
 docker network create ergo-node
 
+# Set the apiKeyHash in the ergo.conf file (if wallet functionality is required).
+ergo {
+    node {
+        mining = false
+    }
+}
+
+scorex {
+  restApi {
+    # node which exposes restApi in firewall should define publicly accessible URL of it
+    #publicUrl = "https://example.com:80"
+    # "ergo" in http://localhost:9053/swagger#/utils/hashBlake2b returns the below Blake2b hash
+    apiKeyHash = "383a6c2f1d1a01241f4b2b465a2beca2528781fe9c3c7a8c9c43d811074b12a0"
+  }
+}
+
 # Choose a password for the database
 echo POSTGRES_PASSWORD=ergo2022 > db/db.secret
 # Same password but different env variable for the GraphQL service
 echo DB_USER_PWD=ergo2022 >> db/db.secret
 # Check that the passwords have saved in the db.secret file
 cat ./db/db.secret
-
-# Create a named volume for Redis
-docker volume create ergo_redis
 
 # Start all services in one go...
 cd node
