@@ -13,10 +13,14 @@ docker volume create --name=ergo_redis
 docker network create ergo-node
 
 # In the docker-compose.yml, the node version image is set to `ergoplatform/ergo:v4.0.41`.
-# Update this to the latest version at https://github.com/ergoplatform/ergo/releases
+# Update this to the latest version at https://github.com/ergoplatform/ergo/tags
 
 # Set the EXPLORER_VERSION variable in `./build.sh` and `docker-compose.yml`.
-# You can use any tag from the explorer repository: https://github.com/ergoplatform/explorer-backend
+# Update this to the latest version at https://github.com/ergoplatform/explorer-backend/tags
+
+# Set the VERSION variable for the graphql component in `docker-compose.yml`.
+# Set the ARG VERSION variable for the graphql component in `/graphql/Dockerfile`.
+# Update this to the latest version at https://github.com/capt-nemo429/ergo-graphql/tags
 
 # If using another node than the one defined in this stack,
 # edit the master-nodes field in explorer\explorer-backend.conf to point it to your node
