@@ -49,9 +49,7 @@ docker compose up -d --build
 # Using stop before/instead of down seems to cause less db corruption issues
 docker compose stop node
 docker compose down
-```
 
-```
 # ...or only the ones you need
 docker compose build db graphql
 docker compose up --no-start
