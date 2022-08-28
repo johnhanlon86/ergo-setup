@@ -9,11 +9,14 @@ Install [Docker](https://docs.docker.com/engine/install/) and [Docker Compose](h
 docker volume create --name=ergo_redis
 docker network create ergo-node
 
-# In the docker-compose.yml, the node version image is set to `ergoplatform/ergo:v4.0.41`. Update this to the latest version at https://github.com/ergoplatform/ergo/releases
+# In the docker-compose.yml, the node version image is set to `ergoplatform/ergo:v4.0.41`.
+# Update this to the latest version at https://github.com/ergoplatform/ergo/releases
 
-# Set the EXPLORER_VERSION variable in `./build.sh` and `docker-compose.yml` and to the desired Explorer version. You can use any tag from the explorer repository: https://github.com/ergoplatform/explorer-backend
+# Set the EXPLORER_VERSION variable in `./build.sh` and `docker-compose.yml`.
+# You can use any tag from the explorer repository: https://github.com/ergoplatform/explorer-backend
 
-# If using another node than the one defined in this stack, edit the master-nodes field in explorer\explorer-backend.conf to point it to your node
+# If using another node than the one defined in this stack,
+# edit the master-nodes field in explorer\explorer-backend.conf to point it to your node
 
 # In the docker-compose.yml, for the node component, within the `command:` change `--mainnet` to `--testnet` as required
 
@@ -37,14 +40,17 @@ scorex {
 
 # Choose a password for the database
 echo POSTGRES_PASSWORD=ergo2022 > db/db.secret
+
 # Same password but different env variable for the GraphQL service
 echo DB_USER_PWD=ergo2022 >> db/db.secret
+
 # Check that the passwords have saved in the db.secret file
 cat ./db/db.secret
 
 # Run the build script
 cd node
 ./build.sh
+
 # If receiving an error `./build.sh: Permission denied`
 chmod +x build.sh
 
