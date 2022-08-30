@@ -2,31 +2,13 @@ version: "3.8"
 
 networks:
   default:
-    name: ergo-node
+    name: ergo-graphql
 
 volumes:
-  # ergo_node:
   ergo_redis:
     external: true
 
 services:
-  # # Ergo blockchain node
-  # node:
-  #   image: ergoplatform/ergo:v4.0.41
-  #   container_name: ergo-node
-  #   command: --mainnet -c /etc/ergo.conf
-  #   volumes:
-  #     - ergo_node:/home/ergo/.ergo
-  #     - ./ergo.conf:/etc/ergo.conf:ro
-  #   ports:
-  #     - "9053:9053"
-  #     - "9030:9030"
-  #   restart: unless-stopped
-  #   logging:
-  #     options:
-  #       max-size: "10m"
-  #       max-file: "3"
-
   # Postgresql database
   db:
     build:
