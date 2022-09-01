@@ -1,6 +1,6 @@
 Docker based Ergo setup. This is a fork of [Ergo Setup](https://github.com/abchrisxyz/ergo-setup) but this repo runs less components and runs on a single docker compose network. This repo does not include a node as this is connected to remotely.
 
-1. Postgresql Database
+1. Postgresql Database (Explorer Backend Schema)
 2. Redis
 3. Explorer Backend Chain-Grabber
 4. Explorer Backend UTX Mempool Tracker
