@@ -21,9 +21,7 @@ services:
     environment:
       POSTGRES_DB: ergo
       POSTGRES_USER: ergo
-    env_file:
-      # Defines POSTGRES_PASSWORD
-      - ./db/db.secret
+      POSTGRES_PASSWORD: ergopassword
     volumes:
       # Mapped volume for easier Postgres upgrades.
       # Make sure the path exists or edit it here.
@@ -52,9 +50,8 @@ services:
     build:
       context: ./explorer-backend-9.16.6
       dockerfile: chain-grabber.Dockerfile
-    env_file:
-      # Defines POSTGRES_PASSWORD
-      - ./db/db.secret
+    environment:
+      POSTGRES_PASSWORD: ergopassword
     volumes:
       - ./explorer-backend.conf:/explorer-backend.conf:ro
     networks:
@@ -73,9 +70,8 @@ services:
     build:
       context: ./explorer-backend-9.16.6
       dockerfile: utx-tracker.Dockerfile
-    env_file:
-      # Defines POSTGRES_PASSWORD
-      - ./db/db.secret
+    environment:
+      POSTGRES_PASSWORD: ergopassword
     volumes:
       - ./explorer-backend.conf:/explorer-backend.conf:ro
     networks:
@@ -91,10 +87,7 @@ services:
 
   # GraphQL
   graphql:
-    build:
-      context: ./graphql
-      args:
-        VERSION: "0.3.5"
+    image: johnhanlon86/flux-ergo-graphql:latest
     environment:
       # database host address    
       DB_HOST: db                     
@@ -103,9 +96,11 @@ services:
       # database name      
       DB_NAME: ergo                   
       # database user name      
-      DB_USER_NAME: ergo             
+      DB_USER_NAME: ergo          
+      # database user name
+      DB_USER_PWD: ergopassword
       # ergo node address and port
-      ERGO_NODE_ADDRESS: http://202.61.228.139:9053    
+      ERGO_NODE_ADDRESS: https://node.erg.zelcore.io
       # optional: MAINNET or TESTNET      
       NETWORK: MAINNET                
       # optional: redis host address
@@ -118,9 +113,6 @@ services:
       REDIS_USER_PWD: redispassword
       # optional: maximum query depth
       MAX_QUERY_DEPTH: 5              
-    env_file:
-      # Defines DB_USER_PWD
-      - ./db/db.secret
     links:
       - "db"
       - "redis"
