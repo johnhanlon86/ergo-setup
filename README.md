@@ -32,7 +32,7 @@ ERGO_NODE_ADDRESS: http://your-ip:9053
 # In the docker-compose.yml, for the graphql component,
 # under environment, set the `NETWORK` field to `MAINNET` or `TESTNET` as required
 
-# Run the build script
+# Run the build script to fetch Ergo Explorer-Backend v9.16.6 from source
 ./build.sh
 
 # If receiving an error `./build.sh: Permission denied`
