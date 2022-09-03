@@ -11,13 +11,7 @@ volumes:
 services:
   # Postgresql database
   db:
-    build:
-      context: ./db
-      args:
-        EXPLORER_VERSION: 9.16.6
-    # -- Ucomment and edit if wanting to set custom work_mem value
-    # -- https://www.postgresql.org/docs/current/runtime-config-resource.html
-    # command: ["postgres", "-c", "work_mem=4MB"]
+    image: johnhanlon86/flux-ergo-db:latest
     environment:
       POSTGRES_DB: ergo
       POSTGRES_USER: ergo
